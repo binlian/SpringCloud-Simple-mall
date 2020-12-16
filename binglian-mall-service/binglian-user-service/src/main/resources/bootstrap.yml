@@ -1,0 +1,56 @@
+# 全局参数设置
+## 启动顺序： #1
+server:
+  port: 2002
+#  servlet:
+#    context-path: /user
+
+spring:
+  application:
+    name: binglian-user
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+        username: nacos
+        password: nacos
+      config:
+        ###配置中心连接地址
+        server-addr: 127.0.0.1:8848
+        ###分组
+        group: DEFAULT_GROUP
+        ###类型
+        file-extension: yaml
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: 127.0.0.1:8858
+    ## zipkin + sleuth 配置
+    zipkin:
+      discoveryClientEnabled: true
+      base-url: http://localhost:9411/
+      locator:
+        discovery:
+          enabled: true
+    sleuth:
+      sampler:
+        probability: 1
+
+feign:
+  sentinel:
+    # 开启Sentinel对Feign的支持
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always

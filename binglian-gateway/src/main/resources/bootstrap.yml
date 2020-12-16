@@ -1,0 +1,66 @@
+# 全局参数设置
+## 启动顺序： #1
+server:
+  port: 2000
+
+
+
+spring:
+  application:
+    name: binglian-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 启用自动根据服务ID生成路由
+          lower-case-service-id: true # 设置路由的路径为小写的服务ID
+        routes:
+          - id: youlai-auth
+            uri: lb://binglian-user
+            predicates:
+              - Path=/user/**
+            filters:
+              - StripPrefix=1 # 移除前缀 youlai-auth
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+        username: nacos
+        password: nacos
+      config:
+        ###配置中心连接地址
+        server-addr: 127.0.0.1:8848
+        ###分组
+        group: DEFAULT_GROUP
+        ###类型
+        file-extension: yaml
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: 127.0.0.1:8858
+    ## zipkin + sleuth 配置
+    zipkin:
+      discoveryClientEnabled: true
+      base-url: http://localhost:9411/
+      locator:
+        discovery:
+          enabled: true
+    sleuth:
+      sampler:
+        probability: 1
+
+
+
+
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  file: logs/admin.log

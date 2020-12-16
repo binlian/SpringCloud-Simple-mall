@@ -1,0 +1,42 @@
+
+# 全局参数设置
+## 启动顺序： #1
+
+spring:
+  application:
+    name: binglian-manage
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
+
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+        username: nacos
+        password: nacos
+      config:
+        ###配置中心连接地址
+        server-addr: 127.0.0.1:8848
+        ###分组
+        group: DEFAULT_GROUP
+        ###类型
+        file-extension: yaml
+
+server:
+  port: 2001
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+# 日志
+logging:
+  file: logs/admin.log
